@@ -2,11 +2,21 @@
 
 A tiny GPT (Generative Pretrained Transformer) written from scratch in Python, using Pytorch. Created by following [Andrej Karpathy's tutorial on YouTube](https://www.youtube.com/watch?v=kCc8FmEb1nY).
 
-Karpathy's tutorial shows how to create a decoder-only transformer (same structure as OpenAI's GPT) based on the famous [_Attention is All You Need_ paper](https://arxiv.org/abs/1706.03762).
+Karpathy's tutorial shows how to create a decoder-only transformer (same structure as OpenAI's GPT) based on the famous [_Attention is All You Need_ paper](https://arxiv.org/abs/1706.03762). Another great resource is [3b1b's video](https://www.youtube.com/watch?v=eMlx5fFNoYc&t=790s), which gives a visual explanation of how the attention mechanism works.
 
-The architecture of transformer is shown below. The right side of the architecture is the decoder part (except for the Multi-Head Attention recieving key and values from encoder part):
+The architecture of transformer is shown below. The right side of the architecture is the decoder part (except for the Multi-Head Attention receiving key and values from encoder part):
 
 <img src="./README_imgs/transformer.png" width="300" alt="Transformer architecture">
+
+## Installation 📦
+
+To install the required packages, use the following command: `pip install -r requirements.txt`
+
+## Training a transformer
+
+To train a transformer, run `python3 transformer.py`.
+
+You can change the hyperparameters as well as the training data in the same file.
 
 ## Results ✅
 
@@ -20,4 +30,4 @@ Out of curiosity I also trained a model on _The Hitchhiker's Guide to the Galaxy
 
 <img src="./README_imgs/train_hhgttg.png" width="600" alt="Generated Text when training on HHGTTG">
 
-The generated text are nonsensical and have a lot of made-up words, but they still manage to get the structure of the text as well as some words/names right!
+The generated texts are nonsensical and have a lot of made-up words, but they still manage to get the structure of the text as well as some words/names right!
