@@ -5,7 +5,7 @@ from torch.nn import functional as F
 # Hyperparameters
 batch_size = 64  # Number of independent training examples to train on in parallell
 block_size = 128  # Maximum context length for predictions
-max_iters = 6000
+max_iters = 1000
 eval_interval = 500
 learning_rate = 3e-4
 device = "mps" if torch.backends.mps.is_available() else "cpu" # As I run this on a MacBook M2 Pro chip, I can use MPS to speed up matrix multiplications
@@ -13,7 +13,7 @@ print("Using device: " + device)
 eval_iters = 200
 n_embd = 128 # Number of dimensions in embedding space
 n_head = 4
-n_layer = 6 # Number of Blocks
+n_layer = 2 # Number of Blocks
 dropout = 0.3
 # ----------------
 
@@ -209,7 +209,7 @@ for iter in range(max_iters):
 
     if iter % eval_interval == 0 or iter == max_iters- 1:
         losses = estimate_loss()
-        print(f"Step {iter}: train loss {losses["train"]:.4f}, val loss {losses["val"]:.4f}")
+        print(f"Step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
 
     # Sample a batch of data
     xb, yb = get_batch("train")
