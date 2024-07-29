@@ -1,4 +1,4 @@
-# TinyGPT
+# TinyGPT 🤖
 
 A tiny GPT (Generative Pretrained Transformer) written from scratch in Python, using Pytorch. Created by following [Andrej Karpathy's tutorial on YouTube](https://www.youtube.com/watch?v=kCc8FmEb1nY). A simple TUI is also made for generating text from different models.
 
