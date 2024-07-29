@@ -1,3 +1,4 @@
+import os
 from transformer import TransformerLanguageModel
 import torch
 
@@ -11,7 +12,7 @@ device = "mps" if torch.backends.mps.is_available() else "cpu" # As I run this o
 print("Using device: " + device)
 eval_iters = 200
 n_embd = 128 # Number of dimensions in embedding space
-n_head = 4
+n_head = 4  # Should be a factor of n_embd
 n_layer = 6 # Number of Blocks
 dropout = 0.3
 # ----------------
@@ -21,7 +22,8 @@ torch.manual_seed(1337) # Same seed as used in Karpathy's tutorial video
 # !wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 
 # Open file and read it
-with open("hhgttg.txt", "r", encoding="utf-8") as f:
+dataset_file = "tiny_shakespear.txt"
+with open(dataset_file, "r", encoding="utf-8") as f:
     text = f.read()
 
 # Get all tokens (int our case all individual characters)
@@ -89,6 +91,16 @@ for iter in range(max_iters):
     # Optimize neural network based on gradients
     optimizer.step()
 
-# Generate from the model
-context = torch.zeros((1, 1), dtype=torch.long, device=device)
-print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
+model_dir = f"./models/model-{dataset_file.split(".")[0]}-{block_size}-ctx-{n_layer}-lyr-{n_head}-head-{max_iters}-iters-{batch_size}-batch"
+
+if not os.path.exists(model_dir):
+    os.mkdir(model_dir)
+
+torch.save(model, f"{model_dir}/model.pth")
+print("Model weights saved!")
+
+# Save all chars in a file in model_dir
+chars_file = f"{model_dir}/chars.txt"
+if not os.path.exists(chars_file):
+    with open(chars_file, "w", encoding="utf-8") as f:
+        f.write("\n".join(chars))

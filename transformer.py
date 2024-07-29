@@ -63,7 +63,7 @@ class Block(nn.Module):
 
     def __init__(self, block_size, n_embd, n_head, dropout) -> None:
         super().__init__()
-        head_size = n_embd // n_head    # n_embd: embedding dimension, n_head: the number of heads we'd like to hav
+        head_size = n_embd // n_head    # n_embd: embedding dimension, n_head: the number of heads we'd like to have
         self.sa = MultiHeadAttention(block_size, n_head, head_size, n_embd, dropout)
         self.ffwd = FeedForward(n_embd, dropout)
         self.ln1 = nn.LayerNorm(n_embd)
@@ -117,6 +117,9 @@ class TransformerLanguageModel(nn.Module):
     
     def generate(self, idx, max_new_tokens):
         # idx is (B, T) array of indices in the current context
+        for ctx_idx in idx[:, -self.block_size:]:
+            yield [ctx_idx]
+
         for _ in range(max_new_tokens):
 
             # Crop idx to the last block_size tokens
@@ -134,6 +137,7 @@ class TransformerLanguageModel(nn.Module):
             # Sample from distribution, shape: (B, 1)
             idx_next = torch.multinomial(probs, num_samples=1)
 
+
             # Append sampled index to the running sequence, shape: (B, T+1)
             idx = torch.cat((idx, idx_next), dim=1)
-        return idx
+            yield idx_next
