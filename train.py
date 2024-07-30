@@ -4,8 +4,8 @@ import torch
 
 # Hyperparameters
 batch_size = 64  # Number of independent training examples to train on in parallell
-block_size = 128  # Maximum context length for predictions
-max_iters = 6000
+block_size = 192  # Maximum context length for predictions
+max_iters = 9000
 eval_interval = 500
 learning_rate = 3e-4
 device = "mps" if torch.backends.mps.is_available() else "cpu" # As I run this on a MacBook M2 Pro chip, I can use MPS to speed up matrix multiplications
@@ -22,7 +22,7 @@ torch.manual_seed(1337) # Same seed as used in Karpathy's tutorial video
 # !wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 
 # Open file and read it
-dataset_file = "tiny_shakespear.txt"
+dataset_file = "hhgttg.txt"
 with open(dataset_file, "r", encoding="utf-8") as f:
     text = f.read()
 
